@@ -1,11 +1,11 @@
 package com.androidapps.composeMVVM.app.utils
 
-import com.androidapps.composeMVVM.domain.model.GetUserListItem
-import com.androidapps.composeMVVM.data.database.ItemEntity
+import com.androidapps.composeMVVM.domain.model.GithubUserList
+import com.androidapps.composeMVVM.data.database.UserEntity
 
-fun List<GetUserListItem>.toItemEntry(): List<ItemEntity> {
+fun List<GithubUserList>.toItemEntry(): List<UserEntity> {
     return map { userList ->
-        ItemEntity(
+        UserEntity(
             id = userList.id!!.toLong(),
             name = userList.login!!,
             description = userList.url!!
@@ -13,9 +13,9 @@ fun List<GetUserListItem>.toItemEntry(): List<ItemEntity> {
         )
     }
 }
-fun List<ItemEntity>.toUserList(): List<GetUserListItem> {
+fun List<UserEntity>.toUserList(): List<GithubUserList> {
     return map { itemEntry ->
-        GetUserListItem(
+        GithubUserList(
             id = itemEntry.id.toInt(),
             login = itemEntry.name,
             url = itemEntry.description

@@ -2,6 +2,8 @@
 agp = "8.5.1"
 constraintlayoutCompose = "1.0.1"
 converterMoshi = "2.6.2"
+cucumberJava = "7.12.0"
+cucumberPicocontainer = "7.0.0"
 foundation = "1.6.8"
 hiltAndroidCompiler = "2.48"
 hiltAndroidTesting = "2.48"
@@ -32,8 +34,6 @@ ui = "1.6.8"
 uiTestJunit4 = "1.6.8"
 uiTooling = "1.6.8"
 runner = "1.6.1"
-constraintlayout = "2.1.4"
-
 
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
@@ -48,6 +48,10 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
+cucumber-android = { module = "io.cucumber:cucumber-android", version.ref = "cucumberJava" }
+cucumber-java = { module = "io.cucumber:cucumber-java", version.ref = "cucumberJava" }
+cucumber-junit = { module = "io.cucumber:cucumber-junit", version.ref = "cucumberJava" }
+cucumber-picocontainer = { module = "io.cucumber:cucumber-picocontainer", version.ref = "cucumberPicocontainer" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -87,7 +91,7 @@ ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooli
 viewbinding = { group = "androidx.databinding", name = "viewbinding", version = "8.5.1" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
 
 coil = { group = "io.coil-kt", name = "coil-compose", version = "2.6.0" }
 

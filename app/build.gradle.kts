@@ -4,11 +4,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
     id("kotlin-kapt")
-
 }
-
-
-
 
 android {
     namespace = "com.androidapps.composeMVVM"
@@ -75,10 +71,7 @@ android {
             }
         }
     }
-
-
 }
-
 
 dependencies {
 
@@ -101,14 +94,6 @@ dependencies {
     // Kotlin
     implementation(libs.kotlin.stdlib)
 
-    // Hilt for DI
-    /*implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
-    androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.compiler)
-    androidTestImplementation(libs.hilt.android)*/
-
     implementation(libs.androidx.hilt.navigation.compose)
     implementation (libs.hilt.android)
     kapt (libs.hilt.android.compiler)
@@ -128,7 +113,6 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     //implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
 
     // Lifecycle components for MVVM
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -155,11 +139,6 @@ dependencies {
     //implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // Other dependencies
-    /*testImplementation("org.mockito:mockito-core:5.0.0") {
-        exclude(group = "org.objenesis", module = "objenesis") // Example exclusion
-    }*/
-
     androidTestImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     androidTestImplementation(libs.mockito.android)
@@ -180,22 +159,21 @@ dependencies {
     testImplementation(libs.mockk.agent.jvm) // Replace with the latest version
 
     // Cucumber
-    testImplementation ("io.cucumber:cucumber-java:7.12.0")
-    testImplementation ("io.cucumber:cucumber-junit:7.12.0")
-    testImplementation ("io.cucumber:cucumber-android:7.12.0")
+    /*testImplementation (libs.cucumber.java)
+    testImplementation (libs.cucumber.junit)
+    testImplementation (libs.cucumber.android)
 
-    androidTestImplementation("io.cucumber:cucumber-android:7.0.0")
-    androidTestImplementation("io.cucumber:cucumber-picocontainer:7.0.0")
-    androidTestImplementation("io.cucumber:cucumber-java:7.0.0")
-    androidTestImplementation("io.cucumber:cucumber-junit:7.0.0")
+    androidTestImplementation(libs.cucumber.android)
+    androidTestImplementation(libs.cucumber.picocontainer)
+    androidTestImplementation(libs.cucumber.java)
+    androidTestImplementation(libs.cucumber.junit)*/
 
     // JUnit dependency (if not already included)
-    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation(libs.junit)
 
     implementation(libs.ui)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material)
     implementation(libs.androidx.constraintlayout.compose)
-
 
 }

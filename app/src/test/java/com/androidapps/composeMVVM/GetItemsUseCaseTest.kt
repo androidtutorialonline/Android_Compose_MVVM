@@ -1,5 +1,5 @@
 package com.androidapps.composeMVVM
-import com.androidapps.composeMVVM.data.database.ItemEntity
+import com.androidapps.composeMVVM.data.database.UserEntity
 import com.androidapps.composeMVVM.domain.GetUserUseCase
 import com.androidapps.composeMVVM.domain.ItemRepository
 import com.androidapps.composeMVVM.app.utils.toItemEntry
@@ -30,15 +30,15 @@ class GetItemsUseCaseTest {
     fun `should return list of items`() = runBlocking {
         // Arrange
         val expectedItems = listOf(
-            ItemEntity(id = 1, name = "Item 1", description = "Description 1"),
-            ItemEntity(id = 2, name = "Item 2", description = "Description 2")
+            UserEntity(id = 1, name = "Item 1", description = "Description 1"),
+            UserEntity(id = 2, name = "Item 2", description = "Description 2")
         )
 
         // Mock repository response
         `when`(repository.getUserList()).thenReturn(flowOf(expectedItems.toUserList()))
 
         // Act
-        var items = emptyList<ItemEntity>()
+        var items = emptyList<UserEntity>()
         getItemsUseCase().collect {
             items = it.toItemEntry()
         }

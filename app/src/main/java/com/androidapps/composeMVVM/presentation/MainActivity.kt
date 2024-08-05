@@ -27,23 +27,6 @@ fun MyListApp() {
     ItemListScreen()
 }
 
-/*@Composable
-fun MyButton(onClick: () -> Unit) {
-    Button(onClick = onClick) {
-        Text("Click Me")
-    }
-}
-
-@Preview
-@Composable
-fun PreviewMyButton() {
-    MyButton(onClick = {
-        // Handle click event here
-        println("Button clicked!")
-    })
-}*/
-
-
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(

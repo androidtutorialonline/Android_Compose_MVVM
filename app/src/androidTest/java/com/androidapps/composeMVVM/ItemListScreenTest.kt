@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.androidapps.composeMVVM.app.utils.NetworkConnection
 import com.androidapps.composeMVVM.app.utils.toUserList
-import com.androidapps.composeMVVM.data.database.ItemEntity
+import com.androidapps.composeMVVM.data.database.UserEntity
 import com.androidapps.composeMVVM.domain.ItemRepository
 import com.androidapps.composeMVVM.presentation.ItemListScreen
 import com.androidapps.composeMVVM.presentation.MainActivity
@@ -47,7 +47,7 @@ class ItemListScreenTest {
     @Test
     fun items_displayed() {
         // Arrange
-        val items = listOf(ItemEntity(1, "Item 1", "Description 1"))
+        val items = listOf(UserEntity(1, "Item 1", "Description 1"))
 
 
         // Mock behavior

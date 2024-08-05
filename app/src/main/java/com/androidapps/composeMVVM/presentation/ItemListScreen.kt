@@ -1,9 +1,7 @@
 package com.androidapps.composeMVVM.presentation
 
 
-import android.R.id
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,12 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -46,7 +42,7 @@ import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.R
 import com.androidapps.composeMVVM.data.AppError
 import com.androidapps.composeMVVM.data.StatusCalled
-import com.androidapps.composeMVVM.domain.model.GetUserListItem
+import com.androidapps.composeMVVM.domain.model.GithubUserList
 import com.androidapps.composeMVVM.presentation.viewModel.ItemViewModel
 import timber.log.Timber
 
@@ -66,7 +62,7 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
 
     // Define the onItemClick function
     val context = LocalContext.current
-    val onItemClick: (GetUserListItem) -> Unit = { item ->
+    val onItemClick: (GithubUserList) -> Unit = { item ->
         Toast.makeText(context, "Clicked: ${item.login}", Toast.LENGTH_SHORT).show()
 
         //AlertDialogExample()
@@ -106,8 +102,8 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
 
 @Composable
 fun extracted(
-    it: List<GetUserListItem>,
-    onItemClick: (GetUserListItem) -> Unit,
+    it: List<GithubUserList>,
+    onItemClick: (GithubUserList) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -141,10 +137,10 @@ fun extracted(
 }
 
 @Composable
-fun gitUserItem(userInfo: GetUserListItem,
-                onItemClick: (GetUserListItem) -> Unit) {
+fun gitUserItem(userInfo: GithubUserList,
+                onItemClick: (GithubUserList) -> Unit) {
 
-    var selectedItem by remember { mutableStateOf<GetUserListItem?>(null) }
+    var selectedItem by remember { mutableStateOf<GithubUserList?>(null) }
 
     ConstraintLayout(
 

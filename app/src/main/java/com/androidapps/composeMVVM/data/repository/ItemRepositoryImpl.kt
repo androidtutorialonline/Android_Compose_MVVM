@@ -15,14 +15,12 @@ import javax.inject.Inject
 
 class ItemRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    private val itemDao: ItemDao
+    private val itemDao: ItemDao,
 ) : ItemRepository {
 
     override fun getUserList() = flow {
         try {
             // Fetch items from the API
-            //val items = apiService.getItems().map { it.toDomainModel() }
-
             val items = retry {
                 apiService.getUserList()
             }
@@ -35,8 +33,8 @@ class ItemRepositoryImpl @Inject constructor(
                     emit(emptyList())
                 }
                 .collect { list ->
-                emit(list.toUserList())
-            }
+                    emit(list.toUserList())
+                }
         } catch (e: Exception) {
             // Handle exceptions and possibly emit an empty list or an error state
             emit(emptyList()) // Or you can use a Result wrapper to emit a failure state
@@ -53,7 +51,7 @@ class ItemRepositoryImpl @Inject constructor(
         initialDelay: Long = 1000, // 1 second
         maxDelay: Long = 3000,     // 3 seconds
         factor: Double = 2.0,
-        block: suspend () -> T
+        block: suspend () -> T,
     ): T {
         var currentDelay = initialDelay
         repeat(times - 1) {
@@ -67,7 +65,5 @@ class ItemRepositoryImpl @Inject constructor(
         }
         return block() // last attempt
     }
-
-
 }
 

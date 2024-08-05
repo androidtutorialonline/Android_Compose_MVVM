@@ -8,12 +8,12 @@ import io.cucumber.junit.Cucumber
 import io.cucumber.junit.CucumberOptions
 import org.junit.runner.RunWith
 
-@RunWith(Cucumber::class)
+/*@RunWith(Cucumber::class)
 @CucumberOptions(
     features = ["features"],
-    glue = ["com.androidapps.composeMVVMy7]8[0."],
+    glue = ["com.androidapps.composeMVVM."],
     plugin = ["pretty"]
-)
+)*/
 
 class Runner : AndroidJUnitRunner() {
 
