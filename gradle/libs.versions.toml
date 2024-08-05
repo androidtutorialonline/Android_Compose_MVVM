@@ -1,6 +1,8 @@
 [versions]
 agp = "8.5.1"
+constraintlayoutCompose = "1.0.1"
 converterMoshi = "2.6.2"
+foundation = "1.6.8"
 hiltAndroidCompiler = "2.48"
 hiltAndroidTesting = "2.48"
 hiltNavigationCompose = "1.2.0"
@@ -30,10 +32,13 @@ ui = "1.6.8"
 uiTestJunit4 = "1.6.8"
 uiTooling = "1.6.8"
 runner = "1.6.1"
+constraintlayout = "2.1.4"
 
 
 [libraries]
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
@@ -82,6 +87,9 @@ ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooli
 viewbinding = { group = "androidx.databinding", name = "viewbinding", version = "8.5.1" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
+coil = { group = "io.coil-kt", name = "coil-compose", version = "2.6.0" }
 
 
 [plugins]

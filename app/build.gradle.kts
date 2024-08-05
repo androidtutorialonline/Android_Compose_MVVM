@@ -7,6 +7,9 @@ plugins {
 
 }
 
+
+
+
 android {
     namespace = "com.androidapps.composeMVVM"
     compileSdk = 34
@@ -65,6 +68,13 @@ android {
             //META-INF/LICENSE-notice.md
         }
     }
+    sourceSets {
+        getByName("main") {
+            assets {
+                srcDirs("src\\main\\assets", "src\\main\\assets")
+            }
+        }
+    }
 
 
 }
@@ -81,8 +91,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.runner)
+    //implementation(libs.androidx.constraintlayout)
     //androidTestImplementation(platform(libs.androidx.compose.bom))
 
+    implementation(libs.coil)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
@@ -115,6 +127,8 @@ dependencies {
     implementation(libs.converter.moshi)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
+    //implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
 
     // Lifecycle components for MVVM
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -164,5 +178,24 @@ dependencies {
     androidTestImplementation(libs.mockk.android) // Replace with the latest version
     androidTestImplementation(libs.mockk.agent) // Replace with the latest version
     testImplementation(libs.mockk.agent.jvm) // Replace with the latest version
+
+    // Cucumber
+    testImplementation ("io.cucumber:cucumber-java:7.12.0")
+    testImplementation ("io.cucumber:cucumber-junit:7.12.0")
+    testImplementation ("io.cucumber:cucumber-android:7.12.0")
+
+    androidTestImplementation("io.cucumber:cucumber-android:7.0.0")
+    androidTestImplementation("io.cucumber:cucumber-picocontainer:7.0.0")
+    androidTestImplementation("io.cucumber:cucumber-java:7.0.0")
+    androidTestImplementation("io.cucumber:cucumber-junit:7.0.0")
+
+    // JUnit dependency (if not already included)
+    androidTestImplementation("junit:junit:4.13.2")
+
+    implementation(libs.ui)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.constraintlayout.compose)
+
 
 }
