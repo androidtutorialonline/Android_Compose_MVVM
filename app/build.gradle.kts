@@ -42,6 +42,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -112,6 +113,8 @@ dependencies {
     implementation(libs.converter.moshi)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
+    implementation (libs.logging.interceptor)
+
     //implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Lifecycle components for MVVM
@@ -159,14 +162,23 @@ dependencies {
     testImplementation(libs.mockk.agent.jvm) // Replace with the latest version
 
     // Cucumber
-    /*testImplementation (libs.cucumber.java)
+    testImplementation (libs.cucumber.java)
     testImplementation (libs.cucumber.junit)
     testImplementation (libs.cucumber.android)
 
     androidTestImplementation(libs.cucumber.android)
     androidTestImplementation(libs.cucumber.picocontainer)
     androidTestImplementation(libs.cucumber.java)
-    androidTestImplementation(libs.cucumber.junit)*/
+    androidTestImplementation(libs.cucumber.junit)
+
+    // Cucumber
+    testImplementation(libs.cucumber.android) // Replace with the latest version
+    testImplementation(libs.cucumber.junit)
+
+    // Espresso and AndroidX Test
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
+
 
     // JUnit dependency (if not already included)
     androidTestImplementation(libs.junit)

@@ -20,6 +20,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun getUserList() = flow {
         try {
+            //emit(ApiResponse.Loading)
             // Fetch items from the API
             val items = retry {
                 apiService.getUserList()

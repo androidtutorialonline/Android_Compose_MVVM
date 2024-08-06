@@ -7,14 +7,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -64,8 +68,6 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val onItemClick: (GithubUserList) -> Unit = { item ->
         Toast.makeText(context, "Clicked: ${item.login}", Toast.LENGTH_SHORT).show()
-
-        //AlertDialogExample()
     }
 
 
@@ -82,7 +84,7 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
                 // Safely handle the nullable items
                 items.data?.let { data ->
                     // If data is not null, display the list
-                    extracted(data, onItemClick)
+                    FillListView(data, onItemClick)
                 } ?: run {
                     // Optionally, show a placeholder if data is null
                     Text(text = "No data available", modifier = Modifier.padding(16.dp))
@@ -101,7 +103,7 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun extracted(
+fun FillListView(
     it: List<GithubUserList>,
     onItemClick: (GithubUserList) -> Unit,
 ) {
@@ -115,30 +117,17 @@ fun extracted(
                 key = movies.itemKey { it.id },
             )*/
         items(it) { item ->
-
             Timber.e("Item Data$item")
             gitUserItem(userInfo = item, onItemClick)
-
-            /*Row(verticalAlignment = Alignment.CenterVertically) {
-
-                Icon(imageVector = Icons.Default.Star, contentDescription = null)
-                Spacer(modifier = Modifier.width(80.dp))
-                Modifier
-                    .fillMaxWidth()
-                    .clickable { onItemClick(item) }
-                    .padding(16.dp)
-                Text(text = item.login!!, style = MaterialTheme.typography.headlineLarge)
-                Text(text = item.url!!, style = MaterialTheme.typography.bodyMedium)
-
-            }*/
-
         }
     }
 }
 
 @Composable
-fun gitUserItem(userInfo: GithubUserList,
-                onItemClick: (GithubUserList) -> Unit) {
+fun gitUserItem(
+    userInfo: GithubUserList,
+    onItemClick: (GithubUserList) -> Unit,
+) {
 
     var selectedItem by remember { mutableStateOf<GithubUserList?>(null) }
 
@@ -153,7 +142,8 @@ fun gitUserItem(userInfo: GithubUserList,
             .height(180.dp)
             .padding(vertical = 4.dp),
     ) {
-        val (cover, card) = createRefs()
+        val (cover, card, data) = createRefs()
+
 
         Box(
             modifier = Modifier
@@ -167,27 +157,22 @@ fun gitUserItem(userInfo: GithubUserList,
                     width = Dimension.fillToConstraints
                 },
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(vertical = 6.dp)
-                    .fillMaxWidth()
-                    .padding(start = 150.dp,
-                        top = 45.dp),
-            ) {
-                Text(
-                    text = userInfo.login!!,
-                    style = MaterialTheme.typography.titleLarge,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                )
 
-                Text(
-                    color = Color(0xFF415BE9),
-                    text = userInfo.url!!,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
         }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 10.dp)
+                .constrainAs(data) {
+                    start.linkTo(cover.end)
+                    top.linkTo(cover.top)
+                },
+        ) {
+            KeyValueDisplay(key = "User Name: ", value = userInfo.login ?: "")
+            KeyValueDisplay(key = "URL: ", value = userInfo.url ?: "", color = Color(0xFF415BE9))
+        }
+
 
         AsyncImage(
             model = userInfo.avatarUrl,
@@ -196,11 +181,13 @@ fun gitUserItem(userInfo: GithubUserList,
 
             contentDescription = userInfo.url,
             modifier = Modifier
+                .size(118.dp) // Size of the image
+                .clip(CircleShape) // Clip image to a circular shape
                 .width(120.dp)
                 .aspectRatio(0.85f)
                 .constrainAs(cover) {
                     start.linkTo(card.start, 8.dp)
-                    bottom.linkTo(card.bottom, 18.dp)
+                    bottom.linkTo(card.bottom, 8.dp)
                 },
         )
     }
@@ -227,6 +214,25 @@ fun gitUserItem(userInfo: GithubUserList,
         )
     }
 
+}
+
+@Composable
+fun KeyValueDisplay(key: String, value: String, color: Color = Color.Black) {
+
+    Text(
+        text = key,
+        style = MaterialTheme.typography.titleLarge,
+        color = color
+    )
+
+    Spacer(modifier = Modifier.width(8.dp))
+    Text(
+        text = value,
+        style = MaterialTheme.typography.titleMedium,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+        color = color
+    )
 }
 
 
