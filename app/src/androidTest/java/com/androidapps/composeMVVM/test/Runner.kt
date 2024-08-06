@@ -10,9 +10,9 @@ import org.junit.runner.RunWith
 
 @RunWith(Cucumber::class)
 @CucumberOptions(
-    features = ["features"],
+    features = ["gitHubAPI.feature"],
     glue = ["com.androidapps.composeMVVM"],
-    plugin = ["pretty", "de.monochromata.cucumber.report.PrettyReports:target/pretty-cucumber"]
+    plugin = ["pretty", "me.jvt.cucumber.report.PrettyReports:/sdcard/Download/pretty-cucumber"]
     //plugin = ["pretty", "me.jvt.cucumber:report.PrettyReports:/sdcard/Download/cucumber-reports"]
     //plugin = ["pretty", "me.jvt.cucumber:report.PrettyReports:/data/data/com.androidapps.composeMVVM/cache/cucumber-reports/"]
 )
