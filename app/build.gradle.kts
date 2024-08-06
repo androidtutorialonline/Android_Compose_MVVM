@@ -12,12 +12,13 @@ android {
 
     defaultConfig {
         applicationId = "com.androidapps.composeMVVM"
+        testApplicationId = "com.androidapps.composeMVVM.test"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "com.androidapps.composeMVVM.Runner"
+        testInstrumentationRunner = "com.androidapps.composeMVVM.test.Runner"
         //testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -49,6 +50,7 @@ android {
     }
 
     testOptions {
+        //execution 'ANDROIDX_TEST_ORCHESTRATOR'
         packagingOptions {
             jniLibs {
                 useLegacyPackaging = true
@@ -171,13 +173,15 @@ dependencies {
     androidTestImplementation(libs.cucumber.java)
     androidTestImplementation(libs.cucumber.junit)
 
+    androidTestImplementation(libs.reporting.plugin)
+    testImplementation(libs.reporting.plugin)
+
     // Cucumber
     testImplementation(libs.cucumber.android) // Replace with the latest version
     testImplementation(libs.cucumber.junit)
 
     // Espresso and AndroidX Test
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
 
 
     // JUnit dependency (if not already included)

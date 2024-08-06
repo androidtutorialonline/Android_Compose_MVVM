@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey
 data class UserEntity(
     @PrimaryKey val id: Long,
     val loginName: String?,
-    val url: String?,
-    val avatarUrl: String?,
-    val followersUrl: String?,
-    val followingUrl: String?,
-    val subscriptionsUrl: String?,
-    val organizationsUrl: String?,
-    val reposUrl: String?,
-    val type: String?,
-    val siteAdmin: Boolean?
+    val url: String,
+    val avatarUrl: String? = "",
+    val followersUrl: String? = "",
+    val followingUrl: String? = "",
+    val subscriptionsUrl: String? = "",
+    val organizationsUrl: String? = "",
+    val reposUrl: String? = "",
+    val type: String? = "",
+    val siteAdmin: Boolean? = false
 )
 

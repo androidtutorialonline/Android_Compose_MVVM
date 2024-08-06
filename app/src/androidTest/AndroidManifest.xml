@@ -3,7 +3,7 @@
     >
 
     <application
-        android:name=".Runner"
+        android:name=".test.Runner"
         android:allowBackup="true"
         android:label="MyApp"
         android:supportsRtl="true">

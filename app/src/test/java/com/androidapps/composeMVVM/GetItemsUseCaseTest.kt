@@ -30,8 +30,8 @@ class GetItemsUseCaseTest {
     fun `should return list of items`() = runBlocking {
         // Arrange
         val expectedItems = listOf(
-            UserEntity(id = 1, name = "Item 1", description = "Description 1"),
-            UserEntity(id = 2, name = "Item 2", description = "Description 2")
+            UserEntity(id = 1, loginName = "Item 1", url = "Description 1"),
+            UserEntity(id = 2, loginName = "Item 2", url = "Description 2")
         )
 
         // Mock repository response
