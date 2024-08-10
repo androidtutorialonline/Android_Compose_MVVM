@@ -12,13 +12,14 @@ interface ApiService {
     @GET("/users")
     suspend fun getUserList(): List<GithubUserList>
 
-    @GET("/repos/{user}/{repo}")
-    suspend fun getEndpoint(@Path("repo") repo: String?): Call<Any?>?
+    /*Cucumber test API*/
+    @GET("/repos/users/{repo}")
+    suspend fun getEndpoint(@Path("repo") repo: String?): ApiResponse<List<GithubUserList>>
 
-    @POST("/repos/{user}/{repo}")
-    suspend fun postEndpoint(@Path("repo") repo: String?): Call<Any?>?
+    @POST("/repos/users/{repo}")
+    suspend fun postEndpoint(@Path("repo") repo: String?): ApiResponse<List<GithubUserList>>
 
-    @DELETE("/repos/{user}/{repo}")
-    suspend fun deleteEndpoint(@Path("repo") repo: String?): Call<Any?>?
+    @DELETE("/repos/users/{repo}")
+    suspend fun deleteEndpoint(@Path("repo") repo: String?): ApiResponse<List<GithubUserList>>
 
 }

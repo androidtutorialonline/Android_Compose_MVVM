@@ -4,6 +4,7 @@ import com.androidapps.composeMVVM.data.database.ItemDao
 import com.androidapps.composeMVVM.domain.ItemRepository
 import com.androidapps.composeMVVM.app.utils.toItemEntry
 import com.androidapps.composeMVVM.app.utils.toUserList
+import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -20,30 +21,28 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun getUserList() = flow {
         try {
-            //emit(ApiResponse.Loading)
+            emit(ApiResponse.Loading)
             // Fetch items from the API
             val items = retry {
                 apiService.getUserList()
             }
             // Insert fetched items into the local database
             itemDao.insertItems(items.toItemEntry())
-
             // Emit all items from the local database as a flow
             itemDao.getAllItems()
                 .catch {
                     emit(emptyList())
                 }
                 .collect { list ->
-                    emit(list.toUserList())
+                    emit(ApiResponse.Success(list.toUserList()))
                 }
         } catch (e: Exception) {
             // Handle exceptions and possibly emit an empty list or an error state
-            emit(emptyList()) // Or you can use a Result wrapper to emit a failure state
+            emit(ApiResponse.Error(e))
+            //emit(emptyList()) // Or you can use a Result wrapper to emit a failure state
             // Log the error or handle it accordingly
             Timber.e(e, "Failed to fetch items")
         }
-
-        //emit(value = apiService.getUserList())
     }.flowOn(Dispatchers.IO)
 
 
@@ -66,5 +65,19 @@ class ItemRepositoryImpl @Inject constructor(
         }
         return block() // last attempt
     }
+
+
+    override fun getEndpoint() = flow {
+        try {
+            apiService.getEndpoint("")
+
+        } catch (e: Exception) {
+            // Handle exceptions and possibly emit an empty list or an error state
+            emit(ApiResponse.Error(e))
+            //emit(emptyList()) // Or you can use a Result wrapper to emit a failure state
+            // Log the error or handle it accordingly
+            Timber.e(e, "Failed to fetch items")
+        }
+    }.flowOn(Dispatchers.IO)
 }
 

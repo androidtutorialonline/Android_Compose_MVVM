@@ -1,6 +1,7 @@
 package com.androidapps.composeMVVM
 
 import com.androidapps.composeMVVM.app.MyApp
+import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.ApiService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -24,7 +25,7 @@ class GitHubApiSteps {
 
     @Inject
     lateinit var apiService: ApiService
-    //private lateinit var response: ApiResponse
+    private lateinit var response: ApiResponse<Any>
 
     @Before
     fun setUp() {
@@ -43,11 +44,12 @@ class GitHubApiSteps {
     @Throws(Exception::class)
     fun a_request_is_made(method: String) {
         runBlocking {
-            //response =
+            response =
                 when (method.uppercase(Locale.getDefault())) {
-                "GET" -> apiService.getEndpoint("octocat/Hello-World")!!.execute()
-                "POST" -> apiService.postEndpoint("octocat/Hello-World")!!.execute()
-                "DELETE" -> apiService.deleteEndpoint("octocat/Hello-World")!!.execute()
+                "GET1" -> apiService.getUserList()
+                "GET" -> apiService.getEndpoint("octocat/Hello-World")
+                "POST" -> apiService.postEndpoint("octocat/Hello-World")
+                "DELETE" -> apiService.deleteEndpoint("octocat/Hello-World")
                 else -> throw IllegalArgumentException("Invalid HTTP method: $method")
             }
         }
@@ -55,7 +57,7 @@ class GitHubApiSteps {
 
     @Then("the response status code should be {int}")
     fun the_response_status_code_should_be(statusCode: Int) {
-        //Assert.assertEquals(statusCode.toLong(), response!!.code().toLong())
+        Assert.assertEquals(statusCode.toLong(), response!!.code().toLong())
     }
 
     @When("a <method> request is made")

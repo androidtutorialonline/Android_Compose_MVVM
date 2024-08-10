@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androidapps.composeMVVM.app.utils.NetworkConnection
+import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.AppError
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import com.androidapps.composeMVVM.data.Resource
@@ -27,8 +28,8 @@ class ItemViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _userInfo =
-        MutableStateFlow<Resource<List<GithubUserList>>>(Resource.success(emptyList()))
-    val userInfo: StateFlow<Resource<List<GithubUserList>>> = _userInfo.asStateFlow()
+        MutableStateFlow<ApiResponse<List<GithubUserList>>>(ApiResponse.Success(emptyList()))
+    val userInfo: StateFlow<ApiResponse<List<GithubUserList>>> = _userInfo.asStateFlow()
 
     private val _errorMessage = MutableLiveData<AppError?>()
     val errorMessage: LiveData<AppError?> = _errorMessage
@@ -41,17 +42,20 @@ class ItemViewModel @Inject constructor(
 
         try {
             if (networkConnection?.isOnline()!!) {
-                _userInfo.value = Resource.loading(null)
+                //_userInfo.value = Resource.loading(null)
 
-                getUserUseCase()
+                getUserUseCase().collect { itemList ->
+                    _userInfo.value = itemList
+                }
+                /*getUserUseCase()
                     .catch {
                         Timber.e("", " error occurred")
                         _errorMessage.value = AppError.UnknownError("")
                     }
                     .collect { itemList ->
-                        _userInfo.value = Resource.success(itemList)
+                        //_userInfo.value = Resource.success(itemList)
                         _errorMessage.value = null // Clear previous errors
-                    }
+                    }*/
             } else {
                 Timber.i("NetworkConnection", "Internet is not connected.")
                 _errorMessage.value = AppError.InternetError

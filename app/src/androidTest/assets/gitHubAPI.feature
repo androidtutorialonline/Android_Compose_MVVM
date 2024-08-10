@@ -5,11 +5,13 @@ Feature: GitHub API Response Handling
 
   Scenario Outline: Verify response status codes
     Given the GitHub API endpoint is "<endpoint>"
-    When a <method> request is made
+    #When a <method> request is made
+    When a "<method>" request is made
     Then the response status code should be <status_code>
 
     Examples:
       | endpoint                    | method | status_code |
+      | /repos/octocat/Hello-World   | GET    | 200         |
       | /repos/octocat/Hello-World   | GET    | 200         |
       | /repos/octocat/Hello-World   | POST   | 400         |
       | /repos/octocat/Unknown-Repo  | GET    | 404         |

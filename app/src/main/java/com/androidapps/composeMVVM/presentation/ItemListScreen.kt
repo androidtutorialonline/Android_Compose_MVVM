@@ -44,6 +44,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.R
+import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.AppError
 import com.androidapps.composeMVVM.data.StatusCalled
 import com.androidapps.composeMVVM.domain.model.GithubUserList
@@ -54,6 +55,9 @@ import timber.log.Timber
 @Composable
 fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
     val items by viewModel.userInfo.collectAsState()
+
+    //private val viewModel: UserViewModel by viewModels()
+
     val errorMessage by viewModel.errorMessage.observeAsState()
 
     val errorText = when (errorMessage) {
@@ -79,25 +83,41 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
             modifier = Modifier.padding(16.dp)
         )
     } else {
-        when (items.status) {
-            StatusCalled.SUCCESS -> {
-                // Safely handle the nullable items
-                items.data?.let { data ->
-                    // If data is not null, display the list
-                    FillListView(data, onItemClick)
-                } ?: run {
-                    // Optionally, show a placeholder if data is null
-                    Text(text = "No data available", modifier = Modifier.padding(16.dp))
-                }
-            }
+        // Observe the user state
+                when (items) {
 
-            StatusCalled.LOADING -> {
-                //mBinding.progress.visibility = View.VISIBLE
-            }
+                    is ApiResponse.Loading -> {
+                        // Show loading indicator
+                    }
+                    is ApiResponse.Success -> {
+                        // Display user data
+                        val data = (items as ApiResponse.Success<List<GithubUserList>>).data
+                        FillListView(data, onItemClick)
+                    }
+                    is ApiResponse.Error -> {
+                        // Show error message
+                        //val exception = items.exception
+                    }
 
-            StatusCalled.ERROR -> {
-                //mBinding.progress.visibility = View.GONE
-            }
+                    /*StatusCalled.SUCCESS -> {
+                        // Safely handle the nullable items
+                        items.data?.let { data ->
+                            // If data is not null, display the list
+                            FillListView(data, onItemClick)
+                        } ?: run {
+                            // Optionally, show a placeholder if data is null
+                            Text(text = "No data available", modifier = Modifier.padding(16.dp))
+                        }
+                    }
+
+                    StatusCalled.LOADING -> {
+                        //mBinding.progress.visibility = View.VISIBLE
+                    }
+
+                    StatusCalled.ERROR -> {
+                        //mBinding.progress.visibility = View.GONE
+                    }*/
+
         }
     }
 }
