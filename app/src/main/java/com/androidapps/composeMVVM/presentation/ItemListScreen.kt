@@ -92,9 +92,9 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
                     is ApiResponse.Success -> {
                         // Display user data
                         val data = (items as ApiResponse.Success<List<GithubUserList>>).data
-                        FillListView(data, onItemClick)
+                        FillListView(data!!, onItemClick)
                     }
-                    is ApiResponse.Error -> {
+                    is ApiResponse.ErrorMessage -> {
                         // Show error message
                         //val exception = items.exception
                     }

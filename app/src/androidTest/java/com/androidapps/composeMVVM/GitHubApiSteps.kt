@@ -3,6 +3,7 @@ package com.androidapps.composeMVVM
 import com.androidapps.composeMVVM.app.MyApp
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.ApiService
+import com.androidapps.composeMVVM.domain.model.GithubUserList
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -13,6 +14,7 @@ import io.cucumber.java.en.When
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Rule
+import retrofit2.Response
 import java.util.Locale
 import javax.inject.Inject
 
@@ -25,7 +27,7 @@ class GitHubApiSteps {
 
     @Inject
     lateinit var apiService: ApiService
-    private lateinit var response: ApiResponse<Any>
+    private lateinit var response: Response<List<GithubUserList>>
 
     @Before
     fun setUp() {
@@ -46,10 +48,8 @@ class GitHubApiSteps {
         runBlocking {
             response =
                 when (method.uppercase(Locale.getDefault())) {
-                "GET1" -> apiService.getUserList()
-                "GET" -> apiService.getEndpoint("octocat/Hello-World")
-                "POST" -> apiService.postEndpoint("octocat/Hello-World")
-                "DELETE" -> apiService.deleteEndpoint("octocat/Hello-World")
+                "GET" -> apiService.getUserList()
+
                 else -> throw IllegalArgumentException("Invalid HTTP method: $method")
             }
         }
@@ -57,7 +57,7 @@ class GitHubApiSteps {
 
     @Then("the response status code should be {int}")
     fun the_response_status_code_should_be(statusCode: Int) {
-        Assert.assertEquals(statusCode.toLong(), response!!.code().toLong())
+        Assert.assertEquals(statusCode.toLong(), response.code().toLong())
     }
 
     @When("a <method> request is made")

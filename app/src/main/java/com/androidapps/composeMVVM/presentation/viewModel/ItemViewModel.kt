@@ -28,7 +28,7 @@ class ItemViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _userInfo =
-        MutableStateFlow<ApiResponse<List<GithubUserList>>>(ApiResponse.Success(emptyList()))
+        MutableStateFlow<ApiResponse<List<GithubUserList>>>(ApiResponse.Success(emptyList(), 0))
     val userInfo: StateFlow<ApiResponse<List<GithubUserList>>> = _userInfo.asStateFlow()
 
     private val _errorMessage = MutableLiveData<AppError?>()
@@ -42,20 +42,9 @@ class ItemViewModel @Inject constructor(
 
         try {
             if (networkConnection?.isOnline()!!) {
-                //_userInfo.value = Resource.loading(null)
-
                 getUserUseCase().collect { itemList ->
                     _userInfo.value = itemList
                 }
-                /*getUserUseCase()
-                    .catch {
-                        Timber.e("", " error occurred")
-                        _errorMessage.value = AppError.UnknownError("")
-                    }
-                    .collect { itemList ->
-                        //_userInfo.value = Resource.success(itemList)
-                        _errorMessage.value = null // Clear previous errors
-                    }*/
             } else {
                 Timber.i("NetworkConnection", "Internet is not connected.")
                 _errorMessage.value = AppError.InternetError

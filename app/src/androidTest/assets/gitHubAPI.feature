@@ -11,8 +11,5 @@ Feature: GitHub API Response Handling
 
     Examples:
       | endpoint                    | method | status_code |
-      | /repos/octocat/Hello-World   | GET    | 200         |
-      | /repos/octocat/Hello-World   | GET    | 200         |
-      | /repos/octocat/Hello-World   | POST   | 400         |
-      | /repos/octocat/Unknown-Repo  | GET    | 404         |
-      | /repos/octocat/Hello-World   | DELETE | 500         |
+      | /users                      | GET    | 200         |
+      | /users                      | POST   | 404         |

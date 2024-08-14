@@ -94,4 +94,10 @@ object AppModule {
         apiService: ApiService,
         itemDao: ItemDao,
     ): ItemRepository = ItemRepositoryImpl(apiService, itemDao)
+
+    @Provides
+    fun provideCucumberRepository(
+        apiService: ApiService,
+        itemDao: ItemDao,
+    ): CucumberRepository = CucumberRepositoryImpl(apiService, itemDao)
 }
