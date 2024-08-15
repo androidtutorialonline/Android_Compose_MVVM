@@ -1,5 +1,6 @@
 package com.androidapps.composeMVVM.data
 
+import com.androidapps.composeMVVM.data.model.userInfo
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import retrofit2.Call
 import retrofit2.Response
@@ -17,7 +18,7 @@ interface ApiService {
     suspend fun getUserRepo(@Path("username") repo: String?): Response<List<GithubUserList>>
 
     @GET("/users/{username}")
-    suspend fun getUserInfo(@Path("username") repo: String?): Response<List<GithubUserList>>
+    suspend fun getUserProfile(@Path("username") repo: String?): Response<userInfo>
 
     @GET("/users/{username}/followers")
     suspend fun getFollowers(@Path("username") repo: String?): Response<List<GithubUserList>>
@@ -32,6 +33,6 @@ interface ApiService {
     suspend fun getOrgs(@Path("username") repo: String?): Response<List<GithubUserList>>
 
     @GET("/repos/{username}/redwood")
-    suspend fun getUserRepoInfo(@Path("username") repo: String?): Response<List<GithubUserList>>
+    suspend fun getUserRepoInfo(@Path("username") repo: String?): Response<userInfo>
 
 }

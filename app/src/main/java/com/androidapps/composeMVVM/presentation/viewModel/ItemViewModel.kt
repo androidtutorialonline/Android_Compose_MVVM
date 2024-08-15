@@ -8,14 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.androidapps.composeMVVM.app.utils.NetworkConnection
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.AppError
-import com.androidapps.composeMVVM.domain.model.GithubUserList
-import com.androidapps.composeMVVM.data.Resource
 import com.androidapps.composeMVVM.domain.GetUserUseCase
+import com.androidapps.composeMVVM.domain.model.GithubUserList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException

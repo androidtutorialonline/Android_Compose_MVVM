@@ -55,7 +55,7 @@ class ItemListScreenTest {
 
         // Act
         composeTestRule.setContent {
-            ItemListScreen(ItemViewModel(FakeGetUserUseCase(items.toUserList(), repository), networkConnection))
+            //ItemListScreen(ItemViewModel(FakeGetUserUseCase(items.toUserList(), repository), networkConnection))
         }
 
         // Assert

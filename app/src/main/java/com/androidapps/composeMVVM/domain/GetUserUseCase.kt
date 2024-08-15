@@ -3,6 +3,7 @@ package com.androidapps.composeMVVM.domain
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import kotlinx.coroutines.flow.Flow
+
 import javax.inject.Inject
 
 open class GetUserUseCase @Inject constructor(

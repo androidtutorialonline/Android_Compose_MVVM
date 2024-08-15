@@ -51,7 +51,7 @@ data class getUserRepoItem(
     val license: License,
     val merges_url: String,
     val milestones_url: String,
-    val mirror_url: Any,
+    val mirror_url: String,
     val name: String,
     val node_id: String,
     val notifications_url: String,

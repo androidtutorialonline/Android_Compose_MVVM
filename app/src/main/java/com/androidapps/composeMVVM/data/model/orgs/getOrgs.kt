@@ -1,13 +1,13 @@
 package com.androidapps.composeMVVM.data.model.orgs
 
 data class getOrgs(
-    val archived_at: Any,
+    val archived_at: String,
     val avatar_url: String,
     val blog: String,
-    val company: Any,
+    val company: String,
     val created_at: String,
     val description: String,
-    val email: Any,
+    val email: String,
     val events_url: String,
     val followers: Int,
     val following: Int,
@@ -18,7 +18,7 @@ data class getOrgs(
     val id: Int,
     val is_verified: Boolean,
     val issues_url: String,
-    val location: Any,
+    val location: String,
     val login: String,
     val members_url: String,
     val name: String,

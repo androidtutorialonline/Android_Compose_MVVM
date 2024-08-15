@@ -95,9 +95,9 @@ object AppModule {
         itemDao: ItemDao,
     ): ItemRepository = ItemRepositoryImpl(apiService, itemDao)
 
-    @Provides
+    /*@Provides
     fun provideCucumberRepository(
         apiService: ApiService,
         itemDao: ItemDao,
-    ): CucumberRepository = CucumberRepositoryImpl(apiService, itemDao)
+    ): CucumberRepository = CucumberRepositoryImpl(apiService, itemDao)*/
 }

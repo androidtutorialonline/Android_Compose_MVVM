@@ -1,4 +1,4 @@
-package com.androidapps.composeMVVM.ui.theme
+package com.androidapps.composeMVVM.presentation.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

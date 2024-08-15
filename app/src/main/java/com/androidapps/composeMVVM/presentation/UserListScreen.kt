@@ -1,6 +1,8 @@
 package com.androidapps.composeMVVM.presentation
 
 
+import android.app.Activity
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,19 +43,19 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.R
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.AppError
-import com.androidapps.composeMVVM.data.StatusCalled
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import com.androidapps.composeMVVM.presentation.viewModel.ItemViewModel
 import timber.log.Timber
 
 
 @Composable
-fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
+fun ItemListScreen(mActivity: Activity, viewModel: ItemViewModel = hiltViewModel()) {
     val items by viewModel.userInfo.collectAsState()
 
     //private val viewModel: UserViewModel by viewModels()
@@ -71,6 +73,14 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
     // Define the onItemClick function
     val context = LocalContext.current
     val onItemClick: (GithubUserList) -> Unit = { item ->
+
+        // Create an intent to start the second activity
+        val intent = Intent(mActivity, UserProfile::class.java).apply {
+            putExtra("userName", item.login)
+        }
+        mActivity.startActivity(intent)
+
+        //UserProfile()
         Toast.makeText(context, "Clicked: ${item.login}", Toast.LENGTH_SHORT).show()
     }
 
@@ -157,10 +167,12 @@ fun gitUserItem(
             .fillMaxWidth()
             .clickable {
                 //onItemClick(userInfo)
+                onItemClick(userInfo)
                 selectedItem = userInfo
             }
             .height(180.dp)
-            .padding(vertical = 4.dp),
+            .padding(vertical = 4.dp)
+
     ) {
         val (cover, card, data) = createRefs()
 
@@ -212,28 +224,38 @@ fun gitUserItem(
         )
     }
     selectedItem?.let {
-        AlertDialog(
-            onDismissRequest = { selectedItem = null },
-            confirmButton = {
-                TextButton(onClick = { selectedItem = null }) {
-                    Text("OK")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { selectedItem = null }) {
-                    Text("Cancel")
-                }
-            },
-            title = {
-                Text(text = "Item Clicked", fontSize = 20.sp)
-            },
-            text = {
-                Text("You clicked on ${it.login} .")
-            },
-            properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
-        )
+        //alertDialog(selectedItem, it)
+        UserProfile()
     }
 
+}
+
+@Composable
+private fun alertDialog(
+    selectedItem: GithubUserList?,
+    it: GithubUserList,
+) {
+    var selectedItem1 = selectedItem
+    AlertDialog(
+        onDismissRequest = { selectedItem1 = null },
+        confirmButton = {
+            TextButton(onClick = { selectedItem1 = null }) {
+                Text("OK")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { selectedItem1 = null }) {
+                Text("Cancel")
+            }
+        },
+        title = {
+            Text(text = "Item Clicked", fontSize = 20.sp)
+        },
+        text = {
+            Text("You clicked on ${it.login} .")
+        },
+        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+    )
 }
 
 @Composable

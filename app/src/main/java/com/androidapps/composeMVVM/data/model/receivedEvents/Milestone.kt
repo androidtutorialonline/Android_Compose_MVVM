@@ -1,12 +1,12 @@
 package com.androidapps.composeMVVM.data.model.receivedEvents
 
 data class Milestone(
-    val closed_at: Any,
+    val closed_at: String,
     val closed_issues: Int,
     val created_at: String,
     val creator: Creator,
     val description: String,
-    val due_on: Any,
+    val due_on: String,
     val html_url: String,
     val id: Int,
     val labels_url: String,

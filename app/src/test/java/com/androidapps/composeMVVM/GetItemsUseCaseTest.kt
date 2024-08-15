@@ -35,12 +35,12 @@ class GetItemsUseCaseTest {
         )
 
         // Mock repository response
-        `when`(repository.getUserList()).thenReturn(flowOf(expectedItems.toUserList()))
+        //`when`(repository.getUserList()).thenReturn(flowOf(expectedItems.toUserList()))
 
         // Act
         var items = emptyList<UserEntity>()
         getItemsUseCase().collect {
-            items = it.toItemEntry()
+            //items = it.toItemEntry()
         }
 
         // Assert

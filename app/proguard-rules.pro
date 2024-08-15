@@ -25,13 +25,9 @@
 
 -keep class com.androidapps.composeMVVM.pojo.** {*;}
 
--keep class androidx.compose.ui.test.junit4.AndroidComposeTestRule { *; }
--keep class com.androidapps.composeMVVM.ItemListScreenTest { *; }
 
 # Hilt
 -dontwarn dagger.hilt.**
 -keep class dagger.hilt.** { *; }
--keep @dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories$Factory { *; }
-
 # Keep Kotlin metadata for reflection
 -keep class kotlin.Metadata { *; }
