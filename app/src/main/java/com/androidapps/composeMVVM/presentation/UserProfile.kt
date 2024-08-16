@@ -1,5 +1,7 @@
 package com.androidapps.composeMVVM.presentation
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +22,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -46,21 +56,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UserProfile : ComponentActivity() {
 
-
     private val viewModel: ProfileViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Retrieve the data passed from the first activity
         val userName = intent.getStringExtra("userName") ?: " "
-
-
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                //UserProfileInfo()
                 viewModel.getUserProfile(userName)
                 UpdateUI()
             }
@@ -79,9 +84,8 @@ class UserProfile : ComponentActivity() {
             is ApiResponse.Success -> {
                 val data = (userProfile as ApiResponse.Success<userInfo>).data
                 data?.let {
-                    UserProfileInfo(it)
+                    UserProfileInfo(it, this)
                 }
-
             }
 
             is ApiResponse.ErrorMessage -> {
@@ -92,19 +96,24 @@ class UserProfile : ComponentActivity() {
 }
 
 @Composable
-fun Buttons(userInfo: userInfo) {
+fun Buttons(userInfo: userInfo, mActivity: Activity) {
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp)
     ) {
-
         Column(
             Modifier
                 .weight(0.5f)
                 .height(170.dp)
                 .padding(10.dp)
+                .clickable {
+                    val intent = Intent(mActivity, Followers::class.java).apply {
+                        putExtra("", "")
+                    }
+                    mActivity.startActivity(intent)
+                }
                 .background(
                     color = Color(android.graphics.Color.parseColor("#37c9bb")),
                     shape = RoundedCornerShape(20.dp)
@@ -130,12 +139,17 @@ fun Buttons(userInfo: userInfo) {
             )
         }
 
-
         Column(
             Modifier
                 .weight(0.5f)
                 .height(170.dp)
                 .padding(10.dp)
+                .clickable {
+                    val intent = Intent(mActivity, repos::class.java).apply {
+                        putExtra("", "")
+                    }
+                    mActivity.startActivity(intent)
+                }
                 .background(
                     color = Color(android.graphics.Color.parseColor("#ff9d43")),
                     shape = RoundedCornerShape(20.dp)
@@ -153,14 +167,13 @@ fun Buttons(userInfo: userInfo) {
             )
 
             Text(
-                text = "following " + userInfo.following.toString(),
+                text = "Repo " + userInfo.public_repos.toString(),
                 fontSize = 18.sp,
                 modifier = Modifier.padding(8.dp),
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         }
-
     }
 
     Row(
@@ -168,12 +181,17 @@ fun Buttons(userInfo: userInfo) {
             .fillMaxWidth()
             .padding(top = 8.dp)
     ) {
-
         Column(
             Modifier
                 .weight(0.5f)
                 .height(170.dp)
                 .padding(10.dp)
+                .clickable {
+                    val intent = Intent(mActivity, Subscriptions::class.java).apply {
+                        putExtra("", "")
+                    }
+                    mActivity.startActivity(intent)
+                }
                 .background(
                     color = Color(android.graphics.Color.parseColor("#389ef2")),
                     shape = RoundedCornerShape(20.dp)
@@ -183,7 +201,8 @@ fun Buttons(userInfo: userInfo) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painterResource(id = R.drawable.star_rate
+                painterResource(
+                    id = R.drawable.star_rate
                 ),
                 contentDescription = null,
                 modifier = Modifier
@@ -192,7 +211,7 @@ fun Buttons(userInfo: userInfo) {
             )
 
             Text(
-                text = "starred " + userInfo.public_gists.toString(),
+                text = "Received Events ",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(8.dp),
                 fontWeight = FontWeight.Bold,
@@ -200,12 +219,18 @@ fun Buttons(userInfo: userInfo) {
             )
         }
 
-
         Column(
             Modifier
                 .weight(0.5f)
                 .height(170.dp)
                 .padding(10.dp)
+                .clickable {
+                    val intent = Intent(mActivity, receivedEvents::class.java).apply {
+                        putExtra("", "")
+                    }
+                    mActivity.startActivity(intent)
+
+                }
                 .background(
                     color = Color(android.graphics.Color.parseColor("#f36095")),
                     shape = RoundedCornerShape(20.dp)
@@ -223,20 +248,18 @@ fun Buttons(userInfo: userInfo) {
             )
 
             Text(
-                text = "Repos " + userInfo.public_repos.toString(),
+                text = "subscriptions ",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(8.dp),
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         }
-
     }
-
 }
 
 @Composable
-private fun UserProfileInfo(userInfo: userInfo) {
+private fun UserProfileInfo(userInfo: userInfo, mActivity: Activity = ComponentActivity()) {
 
     Column(
         Modifier
@@ -245,7 +268,6 @@ private fun UserProfileInfo(userInfo: userInfo) {
             .background(color = Color(android.graphics.Color.parseColor("#f2f1f6"))),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         ConstraintLayout(
             Modifier
                 .height(250.dp)
@@ -263,7 +285,7 @@ private fun UserProfileInfo(userInfo: userInfo) {
 
             AsyncImage(
                 model = userInfo.avatar_url,
-                placeholder = painterResource(id = R.drawable.image_picture_icon), // Use your drawable resource
+                placeholder = painterResource(id = R.drawable.user_2), // Use your drawable resource
                 error = painterResource(id = R.drawable.error_icon), // Use the same drawable for error
 
                 contentDescription = userInfo.url,
@@ -279,8 +301,7 @@ private fun UserProfileInfo(userInfo: userInfo) {
                     }
             )
 
-
-            Text(text = "Profile",
+            Text(text = userInfo.name ?: "Profile",
                 style = TextStyle(color = Color.Green, fontSize = 30.sp),
                 modifier = Modifier.constrainAs(title) {
                     start.linkTo(parent.start)
@@ -295,21 +316,21 @@ private fun UserProfileInfo(userInfo: userInfo) {
 
                     }
                     .constrainAs(back) {
-                    top.linkTo(parent.top, margin = 24.dp)
-                    start.linkTo(parent.start, margin = 24.dp)
+                        top.linkTo(parent.top, margin = 24.dp)
+                        start.linkTo(parent.start, margin = 24.dp)
 
-                })
+                    })
         }
 
         Text(
-            text = userInfo.login?: "", fontSize = 26.sp, fontWeight = FontWeight.Bold,
+            text = userInfo.login ?: "", fontSize = 26.sp, fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(16.dp),
             color = Color(android.graphics.Color.parseColor("#32357a"))
         )
 
         var userBio = ""
-        if(userInfo.blog != "") {
-            userBio = userInfo.blog?: ""
+        if (userInfo.blog != "") {
+            userBio = userInfo.blog ?: ""
         }
 
         Text(
@@ -317,12 +338,35 @@ private fun UserProfileInfo(userInfo: userInfo) {
             fontSize = 18.sp,
             color = Color(android.graphics.Color.parseColor("#747679"))
         )
-
-        Buttons(userInfo)
-
+        Buttons(userInfo, mActivity)
     }
-
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyToolbarWithNav() {
+    TopAppBar(
+        title = {
+            Text(text = "My Toolbar with Navigation")
+        },
+        /*backgroundColor = Color.Blue,
+        contentColor = Color.White,*/
+        navigationIcon = {
+            IconButton(onClick = { /* Handle back press */ }) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+        },
+        actions = {
+            IconButton(onClick = { /* Do something */ }) {
+                Icon(Icons.Default.Search, contentDescription = "Search")
+            }
+            IconButton(onClick = { /* Do something */ }) {
+                Icon(Icons.Default.MoreVert, contentDescription = "More")
+            }
+        }
+    )
+}
+
 
 @Preview(showBackground = true)
 @Composable

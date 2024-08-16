@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Compose MVVM</string>
     <string name="title_activity_user_profile">UserProfile</string>
+    <string name="title_activity_followers">Followers</string>
+    <string name="title_activity_repos">repos</string>
+    <string name="title_activity_received_events">receivedEvents</string>
+    <string name="title_activity_subscriptions">Subscriptions</string>
+    <string name="api_failure_response">API failure response :%1$s</string>
+    <string name="api_success_response">API success response : %1$s</string>
 </resources>

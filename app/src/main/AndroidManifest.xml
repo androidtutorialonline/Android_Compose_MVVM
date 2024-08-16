@@ -19,6 +19,26 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.Subscriptions"
+            android:exported="false"
+            android:label="@string/title_activity_subscriptions"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".presentation.receivedEvents"
+            android:exported="false"
+            android:label="@string/title_activity_received_events"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".presentation.repos"
+            android:exported="false"
+            android:label="@string/title_activity_repos"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".presentation.Followers"
+            android:exported="false"
+            android:label="@string/title_activity_followers"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name=".presentation.UserProfile"
             android:exported="false"
             android:label="@string/title_activity_user_profile"

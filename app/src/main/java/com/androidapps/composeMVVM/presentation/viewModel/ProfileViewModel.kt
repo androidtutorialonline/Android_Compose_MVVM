@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userUseCase: UserProfileUseCause,
-    private val network: NetworkConnection?,
+    private val network: NetworkConnection?
 ) : ViewModel() {
 
     private val _userProfile =
