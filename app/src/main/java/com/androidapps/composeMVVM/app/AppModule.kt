@@ -1,5 +1,6 @@
 package com.androidapps.composeMVVM.app
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.androidapps.composeMVVM.BuildConfig
@@ -53,7 +54,6 @@ object AppModule {
     }
 
 
-
     /*@Singleton
     @Provides
     fun provideApplication(@ApplicationContext app: Context): MyApp {
@@ -64,7 +64,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApiService(): ApiService {
-        val moshiBuilder = Moshi.Builder() .add(KotlinJsonAdapterFactory()) .build()
+        val moshiBuilder = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
         return Retrofit.Builder()
             .baseUrl("https://api.github.com")
@@ -93,7 +93,8 @@ object AppModule {
     fun provideItemRepository(
         apiService: ApiService,
         itemDao: ItemDao,
-    ): ItemRepository = ItemRepositoryImpl(apiService, itemDao)
+        context: Application,
+    ): ItemRepository = ItemRepositoryImpl(apiService, itemDao, context)
 
     /*@Provides
     fun provideCucumberRepository(

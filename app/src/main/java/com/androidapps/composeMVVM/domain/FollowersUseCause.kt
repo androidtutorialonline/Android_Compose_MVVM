@@ -8,7 +8,7 @@ import javax.inject.Inject
 open class FollowersUseCause @Inject constructor(
     private val repository: ItemRepository,
 ) {
-    open operator fun invoke(): Flow<ApiResponse<List<getFollowerListItem>>> {
-        return repository.getFollowers("")
+    open operator fun invoke(userName: String): Flow<ApiResponse<List<getFollowerListItem>>> {
+        return repository.getFollowers(userName)
     }
 }

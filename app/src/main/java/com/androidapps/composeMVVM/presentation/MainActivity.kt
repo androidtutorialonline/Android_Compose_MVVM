@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.androidapps.composeMVVM.presentation.adapter.ItemListScreen
 import com.androidapps.composeMVVM.presentation.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyListApp(mActivity: Activity) {
-    ItemListScreen(mActivity)
+    ItemListScreen()
 }
 
 @Composable

@@ -1,16 +1,13 @@
 package com.androidapps.composeMVVM.data
 
 import com.androidapps.composeMVVM.data.model.followers.getFollowerListItem
-import com.androidapps.composeMVVM.data.model.receivedEvents.receivedEventsListItem
+import com.androidapps.composeMVVM.data.model.receivedEvents.ReceivedEventsListItem
+import com.androidapps.composeMVVM.data.model.receivedEvents.Repo
 import com.androidapps.composeMVVM.data.model.subscriptions.getSubscriptionsListItem
 import com.androidapps.composeMVVM.data.model.userInfo
-import com.androidapps.composeMVVM.data.model.userRepo.getUserRepoItem
 import com.androidapps.composeMVVM.domain.model.GithubUserList
-import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
@@ -19,7 +16,7 @@ interface ApiService {
     suspend fun getUserList(): Response<List<GithubUserList>>
 
     @GET("/users/{username}/repos")
-    suspend fun getUserRepo(@Path("username") userName: String?): Response<List<getUserRepoItem>>
+    suspend fun getUserRepo(@Path("username") userName: String?): Response<List<Repo>>
 
     @GET("/users/{username}")
     suspend fun getUserProfile(@Path("username") username: String): Response<userInfo>
@@ -31,7 +28,7 @@ interface ApiService {
     suspend fun getSubscriptions(@Path("username") username: String): Response<List<getSubscriptionsListItem>>
 
     @GET("/users/{username}/received_events")
-    suspend fun getReceivedEvents(@Path("username") username: String): Response<List<receivedEventsListItem>>
+    suspend fun getReceivedEvents(@Path("username") username: String): Response<List<ReceivedEventsListItem>>
 
     @GET("/orgs/{username}")
     suspend fun getOrgs(@Path("username") username: String): Response<List<GithubUserList>>

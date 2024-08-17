@@ -54,7 +54,7 @@ import com.androidapps.composeMVVM.presentation.viewModel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserProfile : ComponentActivity() {
+class UserProfileActivity : ComponentActivity() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
@@ -109,8 +109,8 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
                 .height(170.dp)
                 .padding(10.dp)
                 .clickable {
-                    val intent = Intent(mActivity, Followers::class.java).apply {
-                        putExtra("", "")
+                    val intent = Intent(mActivity, FollowersActivity::class.java).apply {
+                        putExtra("userName", userInfo.login)
                     }
                     mActivity.startActivity(intent)
                 }
@@ -145,8 +145,8 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
                 .height(170.dp)
                 .padding(10.dp)
                 .clickable {
-                    val intent = Intent(mActivity, repos::class.java).apply {
-                        putExtra("", "")
+                    val intent = Intent(mActivity, ReposActivity::class.java).apply {
+                        putExtra("userName", userInfo.login)
                     }
                     mActivity.startActivity(intent)
                 }
@@ -187,8 +187,8 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
                 .height(170.dp)
                 .padding(10.dp)
                 .clickable {
-                    val intent = Intent(mActivity, Subscriptions::class.java).apply {
-                        putExtra("", "")
+                    val intent = Intent(mActivity, ReceivedEventActivity::class.java).apply {
+                        putExtra("userName", userInfo.login)
                     }
                     mActivity.startActivity(intent)
                 }
@@ -225,8 +225,8 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
                 .height(170.dp)
                 .padding(10.dp)
                 .clickable {
-                    val intent = Intent(mActivity, receivedEvents::class.java).apply {
-                        putExtra("", "")
+                    val intent = Intent(mActivity, SubscriptionsActivity::class.java).apply {
+                        putExtra("userName", userInfo.login)
                     }
                     mActivity.startActivity(intent)
 

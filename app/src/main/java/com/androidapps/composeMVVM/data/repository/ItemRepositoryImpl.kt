@@ -1,7 +1,6 @@
 package com.androidapps.composeMVVM.data.repository
 
 import android.app.Application
-import android.content.Context
 import com.androidapps.composeMVVM.R
 import com.androidapps.composeMVVM.app.utils.RetryAPI
 import com.androidapps.composeMVVM.app.utils.toItemEntry
@@ -9,12 +8,11 @@ import com.androidapps.composeMVVM.app.utils.toUserList
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.ApiService
 import com.androidapps.composeMVVM.data.database.ItemDao
-import com.androidapps.composeMVVM.data.model.followers.getFollowerList
 import com.androidapps.composeMVVM.data.model.followers.getFollowerListItem
-import com.androidapps.composeMVVM.data.model.receivedEvents.receivedEventsListItem
+import com.androidapps.composeMVVM.data.model.receivedEvents.ReceivedEventsListItem
+import com.androidapps.composeMVVM.data.model.receivedEvents.Repo
 import com.androidapps.composeMVVM.data.model.subscriptions.getSubscriptionsListItem
 import com.androidapps.composeMVVM.data.model.userInfo
-import com.androidapps.composeMVVM.data.model.userRepo.getUserRepoItem
 import com.androidapps.composeMVVM.domain.ItemRepository
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +20,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -170,7 +167,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun getReceivedEvents(
         userName: String,
-    ): Flow<ApiResponse<List<receivedEventsListItem>>> =
+    ): Flow<ApiResponse<List<ReceivedEventsListItem>>> =
         flow {
             try {
                 RetryAPI.retry {
@@ -201,7 +198,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun getUserRepo(
         userName: String,
-    ): Flow<ApiResponse<List<getUserRepoItem>>> =
+    ): Flow<ApiResponse<List<Repo>>> =
         flow {
             try {
                 RetryAPI.retry {

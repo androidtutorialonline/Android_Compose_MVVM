@@ -1,7 +1,5 @@
-package com.androidapps.composeMVVM.presentation
+package com.androidapps.composeMVVM.presentation.adapter
 
-
-import android.app.Activity
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -43,23 +41,20 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.R
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.AppError
 import com.androidapps.composeMVVM.domain.model.GithubUserList
+import com.androidapps.composeMVVM.presentation.UserProfileActivity
 import com.androidapps.composeMVVM.presentation.viewModel.ItemViewModel
-import timber.log.Timber
 
 
 @Composable
-fun ItemListScreen(mActivity: Activity, viewModel: ItemViewModel = hiltViewModel()) {
+fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
+
     val items by viewModel.userInfo.collectAsState()
-
-    //private val viewModel: UserViewModel by viewModels()
-
     val errorMessage by viewModel.errorMessage.observeAsState()
 
     val errorText = when (errorMessage) {
@@ -75,12 +70,10 @@ fun ItemListScreen(mActivity: Activity, viewModel: ItemViewModel = hiltViewModel
     val onItemClick: (GithubUserList) -> Unit = { item ->
 
         // Create an intent to start the second activity
-        val intent = Intent(mActivity, UserProfile::class.java).apply {
+        val intent = Intent(context, UserProfileActivity::class.java).apply {
             putExtra("userName", item.login)
         }
-        mActivity.startActivity(intent)
-
-        //UserProfile()
+        context.startActivity(intent)
         Toast.makeText(context, "Clicked: ${item.login}", Toast.LENGTH_SHORT).show()
     }
 
@@ -94,39 +87,21 @@ fun ItemListScreen(mActivity: Activity, viewModel: ItemViewModel = hiltViewModel
         )
     } else {
         // Observe the user state
-                when (items) {
+        when (items) {
+            is ApiResponse.Loading -> {
+                // Show loading indicator
+            }
 
-                    is ApiResponse.Loading -> {
-                        // Show loading indicator
-                    }
-                    is ApiResponse.Success -> {
-                        // Display user data
-                        val data = (items as ApiResponse.Success<List<GithubUserList>>).data
-                        FillListView(data!!, onItemClick)
-                    }
-                    is ApiResponse.ErrorMessage -> {
-                        // Show error message
-                        //val exception = items.exception
-                    }
+            is ApiResponse.Success -> {
+                // Display user data
+                val data = (items as ApiResponse.Success<List<GithubUserList>>).data
+                FillListView(data!!, onItemClick)
+            }
 
-                    /*StatusCalled.SUCCESS -> {
-                        // Safely handle the nullable items
-                        items.data?.let { data ->
-                            // If data is not null, display the list
-                            FillListView(data, onItemClick)
-                        } ?: run {
-                            // Optionally, show a placeholder if data is null
-                            Text(text = "No data available", modifier = Modifier.padding(16.dp))
-                        }
-                    }
-
-                    StatusCalled.LOADING -> {
-                        //mBinding.progress.visibility = View.VISIBLE
-                    }
-
-                    StatusCalled.ERROR -> {
-                        //mBinding.progress.visibility = View.GONE
-                    }*/
+            is ApiResponse.ErrorMessage -> {
+                // Show error message
+                //val exception = items.exception
+            }
 
         }
     }
@@ -147,7 +122,6 @@ fun FillListView(
                 key = movies.itemKey { it.id },
             )*/
         items(it) { item ->
-            Timber.e("Item Data$item")
             gitUserItem(userInfo = item, onItemClick)
         }
     }
@@ -225,7 +199,7 @@ fun gitUserItem(
     }
     selectedItem?.let {
         //alertDialog(selectedItem, it)
-        UserProfile()
+        //UserProfile()
     }
 
 }

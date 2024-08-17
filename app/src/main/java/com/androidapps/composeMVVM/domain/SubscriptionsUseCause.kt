@@ -8,7 +8,7 @@ import javax.inject.Inject
 open class SubscriptionsUseCause @Inject constructor(
     private val repository: ItemRepository
 ) {
-    open operator fun invoke(): Flow<ApiResponse<List<getSubscriptionsListItem>>> {
-        return repository.getSubscriptions("")
+    open operator fun invoke(userName: String): Flow<ApiResponse<List<getSubscriptionsListItem>>> {
+        return repository.getSubscriptions(userName)
     }
 }

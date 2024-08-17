@@ -5,12 +5,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.androidapps.composeMVVM.app.utils.NetworkConnection
-import com.androidapps.composeMVVM.app.utils.toUserList
 import com.androidapps.composeMVVM.data.database.UserEntity
 import com.androidapps.composeMVVM.domain.ItemRepository
-import com.androidapps.composeMVVM.presentation.ItemListScreen
 import com.androidapps.composeMVVM.presentation.MainActivity
-import com.androidapps.composeMVVM.presentation.viewModel.ItemViewModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.impl.annotations.MockK

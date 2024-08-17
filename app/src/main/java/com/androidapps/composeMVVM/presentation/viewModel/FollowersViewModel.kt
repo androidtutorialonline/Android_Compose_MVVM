@@ -1,6 +1,5 @@
 package com.androidapps.composeMVVM.presentation.viewModel
 
-import androidx.compose.material3.TimeInput
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androidapps.composeMVVM.app.utils.NetworkConnection
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newCoroutineContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,11 +28,11 @@ class FollowersViewModel @Inject constructor(
 
     var follower: StateFlow<ApiResponse<List<getFollowerListItem>>> = _follower.asStateFlow()
 
-    private fun getFollower() = viewModelScope.launch {
+     fun getFollower(userName: String) = viewModelScope.launch {
         try {
             networkConnection.let {
                 if (it.isOnline()) {
-                    followersUseCause().collect { followerData ->
+                    followersUseCause(userName).collect { followerData ->
                         _follower.value = followerData
                     }
                 } else {
