@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.data.model.followers.getFollowerListItem
@@ -92,6 +93,7 @@ fun fillFollowerList(itemData: getFollowerListItem = getFollowerListItem()) {
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
                 }
         ) {
 

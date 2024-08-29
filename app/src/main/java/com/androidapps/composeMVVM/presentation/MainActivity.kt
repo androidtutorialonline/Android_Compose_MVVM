@@ -5,42 +5,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.androidapps.composeMVVM.presentation.adapter.ItemListScreen
-import com.androidapps.composeMVVM.presentation.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+/**
+ * The main entry point for the application. This activity sets up the Hilt dependency injection
+ * and provides the Compose UI content.
+ */
+@AndroidEntryPoint // Annotation to enable Hilt for dependency injection
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Enable edge-to-edge mode for modern UI appearance
         enableEdgeToEdge()
+        // Set the Compose UI content for the activity
         setContent {
-            MyListApp(this)
+            // Call the custom MyListApp composable to display the list screen
+            MyListApp()
         }
     }
 }
 
+/**
+ * Composable function to set up the application's main UI.
+ */
 @Composable
-fun MyListApp(mActivity: Activity) {
+fun MyListApp() {
+    // Display the ItemListScreen composable
     ItemListScreen()
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyApplicationTheme {
-        Greeting("Android")
-    }
-}

@@ -23,11 +23,20 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 
+/**
+ * This is a Dagger Hilt module that provides application-wide dependencies.
+ * The `@Module` annotation indicates that this class is a Dagger module.
+ * The `@InstallIn(SingletonComponent::class)` ensures that the provided dependencies have application-wide scope.
+ */
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-
+    /**
+     * Provides a singleton instance of Moshi for JSON parsing and serialization.
+     * Moshi is configured with the `KotlinJsonAdapterFactory` to handle Kotlin data classes.
+     */
     @Provides
     @Singleton
     fun provideMoshi(): Moshi {
@@ -37,6 +46,10 @@ object AppModule {
     }
 
 
+    /**
+     * Configures and returns a singleton instance of OkHttpClient.
+     * The client includes an interceptor for adding headers and logs HTTP request/response data in debug mode.
+     */
     private fun getRetrofitClient(): OkHttpClient {
 
         return OkHttpClient.Builder()
@@ -60,7 +73,10 @@ object AppModule {
         return app as MyApp
     }*/
 
-
+    /**
+     * Provides a singleton instance of the ApiService for making network requests.
+     * The Retrofit instance uses the base URL of GitHub's API and integrates Moshi for JSON conversion.
+     */
     @Provides
     @Singleton
     fun provideApiService(): ApiService {
@@ -76,6 +92,10 @@ object AppModule {
             .create(ApiService::class.java)
     }
 
+    /**
+     * Provides a singleton instance of the AppDatabase using Room.
+     * The database is built using the application context and is named "app_database".
+     */
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
@@ -86,9 +106,17 @@ object AppModule {
         ).build()
     }
 
+    /**
+     * Provides an instance of the ItemDao from the AppDatabase.
+     * The ItemDao is used to access data operations on the Item table in the Room database.
+     */
     @Provides
     fun provideItemDao(db: AppDatabase): ItemDao = db.itemDao()
 
+    /**
+     * Provides a singleton instance of ItemRepository.
+     * The repository implementation (ItemRepositoryImpl) requires the ApiService, ItemDao, and Application context for its dependencies.
+     */
     @Provides
     fun provideItemRepository(
         apiService: ApiService,

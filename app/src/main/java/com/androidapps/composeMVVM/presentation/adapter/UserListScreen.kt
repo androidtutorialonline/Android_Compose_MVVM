@@ -51,12 +51,20 @@ import com.androidapps.composeMVVM.presentation.UserProfileActivity
 import com.androidapps.composeMVVM.presentation.viewModel.ItemViewModel
 
 
+/**
+ * Composable function that displays a list of GitHub users on the screen.
+ *
+ * @param viewModel The [ItemViewModel] instance provided by Hilt. This ViewModel manages the state of the user list and error messages.
+ */
 @Composable
 fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
 
+    // Observe the user list from the ViewModel's state
     val items by viewModel.userInfo.collectAsState()
+    // Observe the error message from the ViewModel's LiveData
     val errorMessage by viewModel.errorMessage.observeAsState()
 
+    // Map AppError types to user-friendly error messages
     val errorText = when (errorMessage) {
         is AppError.NetworkError -> "Network error. Please check your connection."
         is AppError.InternetError -> "Internet is not working. Please check your connection."
@@ -65,11 +73,10 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
         else -> null
     }
 
-    // Define the onItemClick function
+    // Define the onItemClick function to handle item clicks
     val context = LocalContext.current
     val onItemClick: (GithubUserList) -> Unit = { item ->
-
-        // Create an intent to start the second activity
+        // Start UserProfileActivity and pass the clicked user's name
         val intent = Intent(context, UserProfileActivity::class.java).apply {
             putExtra("userName", item.login)
         }
@@ -77,36 +84,39 @@ fun ItemListScreen(viewModel: ItemViewModel = hiltViewModel()) {
         Toast.makeText(context, "Clicked: ${item.login}", Toast.LENGTH_SHORT).show()
     }
 
-
+    // Display error message if present
     if (errorText != null) {
-        // Display an error message to the user
         Text(
             text = errorText,
             color = Color.Red,
             modifier = Modifier.padding(16.dp)
         )
     } else {
-        // Observe the user state
+        // Handle different states of the item list
         when (items) {
             is ApiResponse.Loading -> {
-                // Show loading indicator
+                // TODO: Show a loading indicator
             }
 
             is ApiResponse.Success -> {
-                // Display user data
+                // Pass the list of users to FillListView composable
                 val data = (items as ApiResponse.Success<List<GithubUserList>>).data
                 FillListView(data!!, onItemClick)
             }
 
             is ApiResponse.ErrorMessage -> {
-                // Show error message
-                //val exception = items.exception
+                // TODO: Handle error message case, e.g., show an error UI
             }
-
         }
     }
 }
 
+/**
+ * Composable function to display a list of GitHub users.
+ *
+ * @param it A list of [GithubUserList] that will be displayed in the list.
+ * @param onItemClick A lambda function to handle item click events.
+ */
 @Composable
 fun FillListView(
     it: List<GithubUserList>,
@@ -117,39 +127,39 @@ fun FillListView(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        /*(
-                count = movies.itemCount,
-                key = movies.itemKey { it.id },
-            )*/
+        // Render each item in the list using the gitUserItem composable
         items(it) { item ->
-            gitUserItem(userInfo = item, onItemClick)
+            GitUserItem(userInfo = item, onItemClick)
         }
     }
 }
 
+/**
+ * Composable function to display an individual GitHub user's information.
+ *
+ * @param userInfo An instance of [GithubUserList] representing a single user.
+ * @param onItemClick A lambda function to handle item click events.
+ */
 @Composable
-fun gitUserItem(
+fun GitUserItem(
     userInfo: GithubUserList,
     onItemClick: (GithubUserList) -> Unit,
 ) {
-
     var selectedItem by remember { mutableStateOf<GithubUserList?>(null) }
 
     ConstraintLayout(
-
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                //onItemClick(userInfo)
+                // Handle item click by triggering onItemClick and updating selectedItem
                 onItemClick(userInfo)
                 selectedItem = userInfo
             }
             .height(180.dp)
             .padding(vertical = 4.dp)
-
     ) {
+        // Create references for positioning the UI components within the layout
         val (cover, card, data) = createRefs()
-
 
         Box(
             modifier = Modifier
@@ -161,9 +171,9 @@ fun gitUserItem(
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
-                },
+                }
         ) {
-
+            // Additional content for the card can be added here
         }
 
         Column(
@@ -173,37 +183,42 @@ fun gitUserItem(
                 .constrainAs(data) {
                     start.linkTo(cover.end)
                     top.linkTo(cover.top)
-                },
+                }
         ) {
             KeyValueDisplay(key = "User Name: ", value = userInfo.login ?: "")
             KeyValueDisplay(key = "URL: ", value = userInfo.url ?: "", color = Color(0xFF415BE9))
         }
 
-
         AsyncImage(
             model = userInfo.avatarUrl,
-            placeholder = painterResource(id = R.drawable.image_picture_icon), // Use your drawable resource
-            error = painterResource(id = R.drawable.error_icon), // Use the same drawable for error
-
+            placeholder = painterResource(id = R.drawable.image_picture_icon),
+            error = painterResource(id = R.drawable.error_icon),
             contentDescription = userInfo.url,
             modifier = Modifier
-                .size(118.dp) // Size of the image
-                .clip(CircleShape) // Clip image to a circular shape
+                .size(118.dp)
+                .clip(CircleShape)
                 .width(120.dp)
                 .aspectRatio(0.85f)
                 .constrainAs(cover) {
                     start.linkTo(card.start, 8.dp)
                     bottom.linkTo(card.bottom, 8.dp)
-                },
+                }
         )
     }
+
+    // Display the alert dialog if an item is selected
     selectedItem?.let {
         //alertDialog(selectedItem, it)
         //UserProfile()
     }
-
 }
 
+/**
+ * Composable function to show an alert dialog when an item is clicked.
+ *
+ * @param selectedItem The selected [GithubUserList] item to be displayed in the dialog.
+ * @param it The [GithubUserList] item to be displayed in the dialog.
+ */
 @Composable
 private fun alertDialog(
     selectedItem: GithubUserList?,
@@ -226,15 +241,21 @@ private fun alertDialog(
             Text(text = "Item Clicked", fontSize = 20.sp)
         },
         text = {
-            Text("You clicked on ${it.login} .")
+            Text("You clicked on ${it.login}.")
         },
         properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
     )
 }
 
+/**
+ * Composable function to display a key-value pair.
+ *
+ * @param key The key text to be displayed.
+ * @param value The value text to be displayed.
+ * @param color The color of the value text, default is Black.
+ */
 @Composable
 fun KeyValueDisplay(key: String, value: String, color: Color = Color.Black) {
-
     Text(
         text = key,
         style = MaterialTheme.typography.titleLarge,
@@ -250,5 +271,6 @@ fun KeyValueDisplay(key: String, value: String, color: Color = Color.Black) {
         color = color
     )
 }
+
 
 
