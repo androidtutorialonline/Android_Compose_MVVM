@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.data.ApiResponse
@@ -74,6 +75,7 @@ fun FillReceivedRow(data: ReceivedEventsListItem = ReceivedEventsListItem()) {
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
                 }
                 .height(140.dp)
                 .background(color = Color(android.graphics.Color.GRAY))

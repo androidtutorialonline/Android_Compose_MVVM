@@ -1,12 +1,9 @@
 package com.androidapps.composeMVVM
 
-import com.androidapps.composeMVVM.app.MyApp
-import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.ApiService
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.HiltTestApplication
 import io.cucumber.java.Before
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then

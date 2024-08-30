@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.model.receivedEvents.Repo
@@ -72,6 +73,7 @@ fun FillRepoRow(rowData: Repo = Repo()) {
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
                 }
         ) 
 

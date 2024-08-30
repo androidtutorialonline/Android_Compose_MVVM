@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.data.ApiResponse
@@ -76,6 +77,7 @@ fun FillSubsRow(rowSubData: getSubscriptionsListItem) {
                 top.linkTo(parent.top)
                 end.linkTo(parent.end)
                 bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
 
             })
 
