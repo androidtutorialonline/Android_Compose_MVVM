@@ -7,4 +7,5 @@
     <string name="title_activity_subscriptions">Subscriptions</string>
     <string name="api_failure_response">API failure response :%1$s</string>
     <string name="api_success_response">API success response : %1$s</string>
+    <string name="title_activity_async_image">AsyncImage</string>
 </resources>

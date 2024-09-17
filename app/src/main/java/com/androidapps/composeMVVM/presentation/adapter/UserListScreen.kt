@@ -47,6 +47,7 @@ import com.androidapps.composeMVVM.R
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.AppError
 import com.androidapps.composeMVVM.domain.model.GithubUserList
+import com.androidapps.composeMVVM.presentation.GlobalAsyncImage
 import com.androidapps.composeMVVM.presentation.UserProfileActivity
 import com.androidapps.composeMVVM.presentation.viewModel.ItemViewModel
 
@@ -189,27 +190,15 @@ fun GitUserItem(
             KeyValueDisplay(key = "URL: ", value = userInfo.url ?: "", color = Color(0xFF415BE9))
         }
 
-        AsyncImage(
-            model = userInfo.avatarUrl,
-            placeholder = painterResource(id = R.drawable.image_picture_icon),
-            error = painterResource(id = R.drawable.error_icon),
+        GlobalAsyncImage(
+            imageUrl = userInfo.avatarUrl,
             contentDescription = userInfo.url,
             modifier = Modifier
-                .size(118.dp)
-                .clip(CircleShape)
-                .width(120.dp)
-                .aspectRatio(0.85f)
                 .constrainAs(cover) {
                     start.linkTo(card.start, 8.dp)
                     bottom.linkTo(card.bottom, 8.dp)
                 }
         )
-    }
-
-    // Display the alert dialog if an item is selected
-    selectedItem?.let {
-        //alertDialog(selectedItem, it)
-        //UserProfile()
     }
 }
 

@@ -19,7 +19,7 @@ class ReceivedEventViewModel @Inject constructor(
     private val networkConnection: NetworkConnection
 ): ViewModel() {
 
-    val _receivedEvent = MutableStateFlow<ApiResponse<List<ReceivedEventsListItem>>>(ApiResponse.Success(
+    private val _receivedEvent = MutableStateFlow<ApiResponse<List<ReceivedEventsListItem>>>(ApiResponse.Success(
         emptyList(), 0
     ))
     val receivedEvent: StateFlow<ApiResponse<List<ReceivedEventsListItem>>> = _receivedEvent.asStateFlow()

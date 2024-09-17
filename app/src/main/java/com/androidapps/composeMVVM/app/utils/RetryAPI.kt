@@ -24,7 +24,7 @@ class RetryAPI {
          * @return The result of the block function if it succeeds within the retry attempts.
          * @throws Exception If the block continues to fail after the specified retry attempts.
          */
-        public suspend fun <T> retry(
+        suspend fun <T> retry(
             times: Int = 1,
             initialDelay: Long = 1000, // 1 second
             maxDelay: Long = 3000,     // 3 seconds

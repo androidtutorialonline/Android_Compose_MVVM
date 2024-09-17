@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.presentation.adapter.FillReceivedList
-import com.androidapps.composeMVVM.presentation.adapter.ReceivedEventAdapter
 import com.androidapps.composeMVVM.presentation.ui.theme.MyApplicationTheme
 import com.androidapps.composeMVVM.presentation.viewModel.ReceivedEventViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +28,6 @@ class ReceivedEventActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                //ReceivedEventAdapter(userName)
                 viewModel.getReceivedEvent(userName)
                 updateUI()
             }
@@ -39,7 +37,6 @@ class ReceivedEventActivity : ComponentActivity() {
     @Composable
     private fun updateUI() {
         val itemsData by viewModel.receivedEvent.collectAsState()
-        val context = LocalContext.current
         when (itemsData) {
             is ApiResponse.Loading -> {
 
@@ -53,8 +50,6 @@ class ReceivedEventActivity : ComponentActivity() {
         }
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable

@@ -32,7 +32,6 @@ class FollowersActivity : ComponentActivity() {
             MyApplicationTheme {
                 viewModel.getFollower(userName)
                 UpdateUI()
-            //FollowerAdapter()
             }
         }
     }
@@ -40,7 +39,6 @@ class FollowersActivity : ComponentActivity() {
     @Composable
     private fun UpdateUI() {
         val itemsData by viewModel.follower.collectAsState()
-        val context = LocalContext.current
 
         when (itemsData) {
             is ApiResponse.Loading -> {
@@ -57,11 +55,8 @@ class FollowersActivity : ComponentActivity() {
 
             }
         }
-
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable

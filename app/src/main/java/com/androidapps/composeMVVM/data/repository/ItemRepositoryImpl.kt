@@ -8,11 +8,11 @@ import com.androidapps.composeMVVM.app.utils.toUserList
 import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.ApiService
 import com.androidapps.composeMVVM.data.database.ItemDao
-import com.androidapps.composeMVVM.data.model.followers.getFollowerListItem
+import com.androidapps.composeMVVM.data.model.followers.GetFollowerListItem
 import com.androidapps.composeMVVM.data.model.receivedEvents.ReceivedEventsListItem
 import com.androidapps.composeMVVM.data.model.receivedEvents.Repo
-import com.androidapps.composeMVVM.data.model.subscriptions.getSubscriptionsListItem
-import com.androidapps.composeMVVM.data.model.userInfo
+import com.androidapps.composeMVVM.data.model.subscriptions.GetSubscriptionsListItem
+import com.androidapps.composeMVVM.data.model.UserInfo
 import com.androidapps.composeMVVM.domain.ItemRepository
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import kotlinx.coroutines.Dispatchers
@@ -98,7 +98,7 @@ class ItemRepositoryImpl @Inject constructor(
      * @param userName The username of the GitHub user.
      * @return A Flow emitting ApiResponse containing the user's profile information.
      */
-    override fun userProfile(userName: String): Flow<ApiResponse<userInfo>> =
+    override fun userProfile(userName: String): Flow<ApiResponse<UserInfo>> =
         flow {
             try {
                 emit(ApiResponse.Loading()) // Emit loading state
@@ -141,7 +141,7 @@ class ItemRepositoryImpl @Inject constructor(
      */
     override fun getFollowers(
         userName: String,
-    ): Flow<ApiResponse<List<getFollowerListItem>>> =
+    ): Flow<ApiResponse<List<GetFollowerListItem>>> =
         flow {
             try {
                 emit(ApiResponse.Loading()) // Emit loading state
@@ -179,7 +179,7 @@ class ItemRepositoryImpl @Inject constructor(
      */
     override fun getSubscriptions(
         userName: String,
-    ): Flow<ApiResponse<List<getSubscriptionsListItem>>> =
+    ): Flow<ApiResponse<List<GetSubscriptionsListItem>>> =
         flow {
             try {
                 emit(ApiResponse.Loading()) // Emit loading state

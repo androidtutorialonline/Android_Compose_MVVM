@@ -14,28 +14,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
-import com.androidapps.composeMVVM.data.ApiResponse
 import com.androidapps.composeMVVM.data.model.receivedEvents.ReceivedEventsListItem
-import com.androidapps.composeMVVM.presentation.viewModel.ReceivedEventViewModel
-
-@Composable
-fun ReceivedEventAdapter(userName: String, viewModel: ReceivedEventViewModel = hiltViewModel()) {
-
-
-}
+import com.androidapps.composeMVVM.presentation.GlobalAsyncImage
+import com.androidapps.composeMVVM.presentation.ui.theme.event
 
 @Composable
 fun FillReceivedList(itemsData: List<ReceivedEventsListItem>?) {
@@ -78,11 +67,11 @@ fun FillReceivedRow(data: ReceivedEventsListItem = ReceivedEventsListItem()) {
                     width = Dimension.fillToConstraints
                 }
                 .height(140.dp)
-                .background(color = Color(android.graphics.Color.GRAY))
+                .background(color = event)
 
         )
 
-        AsyncImage(model = data.actor?.avatar_url, contentDescription = data.actor?.url,
+        GlobalAsyncImage(imageUrl = data.actor?.avatar_url, contentDescription = data.actor?.url,
             modifier = Modifier
                 .constrainAs(profileImg) {
                     start.linkTo(card.start)

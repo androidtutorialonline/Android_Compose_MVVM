@@ -1,11 +1,11 @@
 package com.androidapps.composeMVVM.domain
 
 import com.androidapps.composeMVVM.data.ApiResponse
-import com.androidapps.composeMVVM.data.model.followers.getFollowerListItem
+import com.androidapps.composeMVVM.data.model.followers.GetFollowerListItem
 import com.androidapps.composeMVVM.data.model.receivedEvents.ReceivedEventsListItem
 import com.androidapps.composeMVVM.data.model.receivedEvents.Repo
-import com.androidapps.composeMVVM.data.model.subscriptions.getSubscriptionsListItem
-import com.androidapps.composeMVVM.data.model.userInfo
+import com.androidapps.composeMVVM.data.model.subscriptions.GetSubscriptionsListItem
+import com.androidapps.composeMVVM.data.model.UserInfo
 import com.androidapps.composeMVVM.domain.model.GithubUserList
 import kotlinx.coroutines.flow.Flow
 
@@ -29,25 +29,25 @@ interface ItemRepository {
      * Fetches detailed profile information for a specific GitHub user.
      *
      * @param userName The username of the GitHub user.
-     * @return A [Flow] of [ApiResponse] containing [userInfo] for the specified user.
+     * @return A [Flow] of [ApiResponse] containing [UserInfo] for the specified user.
      */
-    fun userProfile(userName: String): Flow<ApiResponse<userInfo>>
+    fun userProfile(userName: String): Flow<ApiResponse<UserInfo>>
 
     /**
      * Fetches a list of followers for a specific GitHub user.
      *
      * @param userName The username of the GitHub user.
-     * @return A [Flow] of [ApiResponse] containing a list of [getFollowerListItem] objects.
+     * @return A [Flow] of [ApiResponse] containing a list of [GetFollowerListItem] objects.
      */
-    fun getFollowers(userName: String): Flow<ApiResponse<List<getFollowerListItem>>>
+    fun getFollowers(userName: String): Flow<ApiResponse<List<GetFollowerListItem>>>
 
     /**
      * Fetches the subscription list (repositories the user is subscribed to) for a specific GitHub user.
      *
      * @param userName The username of the GitHub user.
-     * @return A [Flow] of [ApiResponse] containing a list of [getSubscriptionsListItem] objects.
+     * @return A [Flow] of [ApiResponse] containing a list of [GetSubscriptionsListItem] objects.
      */
-    fun getSubscriptions(userName: String): Flow<ApiResponse<List<getSubscriptionsListItem>>>
+    fun getSubscriptions(userName: String): Flow<ApiResponse<List<GetSubscriptionsListItem>>>
 
     /**
      * Fetches a list of received events (activity such as stars, forks) for a specific GitHub user.

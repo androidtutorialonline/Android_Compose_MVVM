@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 import com.androidapps.composeMVVM.app.utils.NetworkConnection
 import com.androidapps.composeMVVM.data.ApiResponse
-import com.androidapps.composeMVVM.data.model.userInfo
+import com.androidapps.composeMVVM.data.model.UserInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,8 +22,8 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _userProfile =
-        MutableStateFlow<ApiResponse<userInfo>>(ApiResponse.Success(userInfo(), 0))
-    val userProfile: StateFlow<ApiResponse<userInfo>> = _userProfile.asStateFlow()
+        MutableStateFlow<ApiResponse<UserInfo>>(ApiResponse.Success(UserInfo(), 0))
+    val userProfile: StateFlow<ApiResponse<UserInfo>> = _userProfile.asStateFlow()
 
     fun getUserProfile(userName: String) = viewModelScope.launch {
         try {

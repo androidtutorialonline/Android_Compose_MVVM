@@ -13,14 +13,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -36,7 +33,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -45,11 +41,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import coil.compose.AsyncImage
 import com.androidapps.composeMVVM.R
 import com.androidapps.composeMVVM.data.ApiResponse
-import com.androidapps.composeMVVM.data.model.userInfo
+import com.androidapps.composeMVVM.data.model.UserInfo
 import com.androidapps.composeMVVM.presentation.ui.theme.MyApplicationTheme
+import com.androidapps.composeMVVM.presentation.ui.theme.event
+import com.androidapps.composeMVVM.presentation.ui.theme.follower
+import com.androidapps.composeMVVM.presentation.ui.theme.repo
+import com.androidapps.composeMVVM.presentation.ui.theme.subscribe
 import com.androidapps.composeMVVM.presentation.viewModel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,7 +81,7 @@ class UserProfileActivity : ComponentActivity() {
             }
 
             is ApiResponse.Success -> {
-                val data = (userProfile as ApiResponse.Success<userInfo>).data
+                val data = (userProfile as ApiResponse.Success<UserInfo>).data
                 data?.let {
                     UserProfileInfo(it, this)
                 }
@@ -96,7 +95,7 @@ class UserProfileActivity : ComponentActivity() {
 }
 
 @Composable
-fun Buttons(userInfo: userInfo, mActivity: Activity) {
+fun Buttons(userInfo: UserInfo, mActivity: Activity) {
 
     Row(
         modifier = Modifier
@@ -115,7 +114,7 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
                     mActivity.startActivity(intent)
                 }
                 .background(
-                    color = Color(android.graphics.Color.parseColor("#37c9bb")),
+                    color = follower,
                     shape = RoundedCornerShape(20.dp)
                 )
                 .padding(top = 16.dp),
@@ -151,7 +150,7 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
                     mActivity.startActivity(intent)
                 }
                 .background(
-                    color = Color(android.graphics.Color.parseColor("#ff9d43")),
+                    color = repo,
                     shape = RoundedCornerShape(20.dp)
                 )
                 .padding(top = 16.dp),
@@ -193,7 +192,7 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
                     mActivity.startActivity(intent)
                 }
                 .background(
-                    color = Color(android.graphics.Color.parseColor("#389ef2")),
+                    color = event,
                     shape = RoundedCornerShape(20.dp)
                 )
                 .padding(top = 16.dp),
@@ -232,7 +231,7 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
 
                 }
                 .background(
-                    color = Color(android.graphics.Color.parseColor("#f36095")),
+                    color = subscribe,
                     shape = RoundedCornerShape(20.dp)
                 )
                 .padding(top = 16.dp),
@@ -259,7 +258,7 @@ fun Buttons(userInfo: userInfo, mActivity: Activity) {
 }
 
 @Composable
-private fun UserProfileInfo(userInfo: userInfo, mActivity: Activity = ComponentActivity()) {
+private fun UserProfileInfo(userInfo: UserInfo, mActivity: Activity = ComponentActivity()) {
 
     Column(
         Modifier
@@ -283,17 +282,10 @@ private fun UserProfileInfo(userInfo: userInfo, mActivity: Activity = ComponentA
                         bottom.linkTo(parent.bottom)
                     })
 
-            AsyncImage(
-                model = userInfo.avatar_url,
-                placeholder = painterResource(id = R.drawable.user_2), // Use your drawable resource
-                error = painterResource(id = R.drawable.error_icon), // Use the same drawable for error
-
+            GlobalAsyncImage(
+                imageUrl = userInfo.avatar_url!!,
                 contentDescription = userInfo.url,
                 modifier = Modifier
-                    .size(118.dp) // Size of the image
-                    .clip(CircleShape) // Clip image to a circular shape
-                    .width(120.dp)
-                    .aspectRatio(0.85f)
                     .constrainAs(profile) {
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
@@ -349,8 +341,6 @@ fun MyToolbarWithNav() {
         title = {
             Text(text = "My Toolbar with Navigation")
         },
-        /*backgroundColor = Color.Blue,
-        contentColor = Color.White,*/
         navigationIcon = {
             IconButton(onClick = { /* Handle back press */ }) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -372,6 +362,6 @@ fun MyToolbarWithNav() {
 @Composable
 fun GreetingPreview2() {
     MyApplicationTheme {
-        UserProfileInfo(userInfo())
+        UserProfileInfo(UserInfo())
     }
 }

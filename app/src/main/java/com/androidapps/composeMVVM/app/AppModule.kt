@@ -67,12 +67,6 @@ object AppModule {
     }
 
 
-    /*@Singleton
-    @Provides
-    fun provideApplication(@ApplicationContext app: Context): MyApp {
-        return app as MyApp
-    }*/
-
     /**
      * Provides a singleton instance of the ApiService for making network requests.
      * The Retrofit instance uses the base URL of GitHub's API and integrates Moshi for JSON conversion.
@@ -86,7 +80,6 @@ object AppModule {
             .baseUrl("https://api.github.com")
 
             .client(getRetrofitClient())
-            //.addConverterFactory(GsonConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshiBuilder))
             .build()
             .create(ApiService::class.java)
@@ -124,9 +117,4 @@ object AppModule {
         context: Application,
     ): ItemRepository = ItemRepositoryImpl(apiService, itemDao, context)
 
-    /*@Provides
-    fun provideCucumberRepository(
-        apiService: ApiService,
-        itemDao: ItemDao,
-    ): CucumberRepository = CucumberRepositoryImpl(apiService, itemDao)*/
 }
